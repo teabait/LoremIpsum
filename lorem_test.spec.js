@@ -30,4 +30,10 @@ describe("Lorem", function() {
     expect(result).toEqual("harry");
   });
 
+  it("final output word count is equal to user specified word count", function() {
+    var lorem = new Lorem("harry potter hermione ron dumbledore lupin", 500);
+    var result = lorem.createAllParagraphs();
+    expect(result.split(" ").length).toEqual(500);
+  });
+
 });

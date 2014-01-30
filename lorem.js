@@ -37,13 +37,13 @@ Sentence.prototype.toString = function () {
 // | .__/ \__,_|_|  \__,_|\__, |_|  \__,_| .__/|_| |_|
 // |_|                    |___/          |_|
 
-var Paragraph = function() {
-  this.sentences = [];
+var Paragraph = function(sentences) {
+  this.sentences = sentences;
 }
 
 // turns array of sentences into a cohesive paragraph
 Paragraph.prototype.toString = function () {
-  return this.sentences.join(" ");
+  return this.sentences.join(" ") + "\n";
 }
 
 //                        __                  _   _
@@ -78,21 +78,44 @@ LoremIpsumGen.prototype.createSingleSentence = function () {
     var firstWord = this.wordBucket.shift();
     sentenceWords.push(firstWord);
   }
-  console.log(sentenceWords);
   var sentence = new Sentence(sentenceWords);
-  console.log(sentence.toString());
   return sentence.toString();
 }
 
 LoremIpsumGen.prototype.createAllSentences = function () {
-  var sentences = [];
-
   while (this.wordBucket.length > 0) {
     sentence = this.createSingleSentence();
-    sentences.push(sentence);
+    this.sentenceBucket.push(sentence);
+    // console.log(sentence);
   }
-  // console.log(sentences.join(" "));
-  return sentences;
+  return this.sentenceBucket;
 };
+
+LoremIpsumGen.prototype.createSingleParagraph = function () {
+  var paragraphSentences = [];
+  var numSentences = Math.floor(Math.random() *6) + 3;
+  if(this.sentenceBucket.length < numSentences) {
+    numSentences = this.sentenceBucket.length;
+  }
+  for(var i = 0; i < numSentences; i++) {
+    var firstSentence = this.sentenceBucket.shift();
+    paragraphSentences.push(firstSentence);
+  }
+  var paragraph = new Paragraph(paragraphSentences);
+  return paragraph.toString();
+}
+
+LoremIpsumGen.prototype.createAllParagraphs = function () {
+  var paragraphs = [];
+  this.createAllSentences();
+  // console.log(this.sentenceBucket);
+  while (this.sentenceBucket.length > 0) {
+    paragraph = this.createSingleParagraph();
+    // console.log(paragraph);
+    paragraphs.push(paragraph);
+  }
+  // console.log(paragraphs);
+  return paragraphs.join(" ");
+}
 
 module.exports = LoremIpsumGen;
