@@ -19,6 +19,15 @@ var LoremIpsumGen = function(listOfWords, num) {
 var Sentence = function(words) {
   this.words = words;
 }
+
+// make sentence presentable:
+// array to string
+// capitalize first letter
+// add punctuation at end
+Sentence.prototype.toString = function () {
+  this.words[0] = this.words[0].charAt(0).toUpperCase() + this.words[0].slice(1);
+  return this.words.join(" ") + ".";
+}
 //                                              _
 //  _ __   __ _ _ __ __ _  __ _ _ __ __ _ _ __ | |__
 // | '_ \ / _` | '__/ _` |/ _` | '__/ _` | '_ \| '_ \
@@ -28,6 +37,11 @@ var Sentence = function(words) {
 
 var Paragraph = function() {
   this.sentences = [];
+}
+
+// turns array of sentences into a cohesive paragraph
+Paragraph.prototype.toString = function () {
+  return this.sentences.join(" ");
 }
 
 //                        __                  _   _
@@ -40,7 +54,7 @@ var Paragraph = function() {
 // creates a blob of n words, n being the number of words user asks for
 LoremIpsumGen.prototype.fillBucket = function() {
   for(var i = 0; i < this.num; i++) {
-    this.wordBucket.push(this.listOfWords[Math.floor(Math.random()*this.listOfWords.length)]);
+    this.wordBucket.push(this.listOfWords[Math.floor(Math.random()*this.listOfWords.length)].toLowerCase());
   }
   return this.wordBucket;
 }
@@ -78,19 +92,5 @@ LoremIpsumGen.prototype.createAllSentences = function () {
   // console.log(sentences.join(" "));
   return sentences;
 };
-
-// make sentence presentable:
-// array to string
-// capitalize first letter
-// add punctuation at end
-Sentence.prototype.toString = function () {
-  this.words[0] = this.words[0].charAt(0).toUpperCase() + this.words[0].slice(1);
-  return this.words.join(" ") + ".";
-}
-
-// turns array of sentences into a cohesive paragraph
-Paragraph.prototype.toString = function () {
-  return this.sentences.join(" ");
-}
 
 module.exports = LoremIpsumGen;
