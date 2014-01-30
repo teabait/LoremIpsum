@@ -64,8 +64,7 @@ LoremIpsumGen.prototype.createSingleSentence = function () {
   }
   console.log(sentenceWords);
   var sentence = new Sentence(sentenceWords);
-  sentence.words[0] = sentence.words[0].charAt(0).toUpperCase() + sentence.words[0].slice(1);
-  // console.log(sentence.toString());
+  console.log(sentence.toString());
   return sentence.toString();
 }
 
@@ -85,12 +84,13 @@ LoremIpsumGen.prototype.createAllSentences = function () {
 // capitalize first letter
 // add punctuation at end
 Sentence.prototype.toString = function () {
-  return this.words.join(" ");
+  this.words[0] = this.words[0].charAt(0).toUpperCase() + this.words[0].slice(1);
+  return this.words.join(" ") + ".";
 }
 
 // turns array of sentences into a cohesive paragraph
 Paragraph.prototype.toString = function () {
-  this.sentences.join(" ");
+  return this.sentences.join(" ");
 }
 
 module.exports = LoremIpsumGen;
