@@ -8,6 +8,8 @@ var LoremIpsumGen = function(listOfWords, num) {
   this.listOfWords = listOfWords.split(" ");
   this.num = num;
   this.wordBucket = [];
+  this.sentenceBucket = [];
+  this.fillBucket();
 }
 
 //                 _
