@@ -43,7 +43,7 @@ var Paragraph = function(sentences) {
 
 // turns array of sentences into a cohesive paragraph
 Paragraph.prototype.toString = function () {
-  return this.sentences.join(" ") + "\n";
+  return this.sentences.join(" ") + "\n\n";
 }
 
 //                        __                  _   _
