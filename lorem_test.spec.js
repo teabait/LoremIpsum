@@ -14,7 +14,7 @@ describe("Lorem", function() {
 
   it("returns a sentence as a string", function() {
     var lorem = new Lorem("Harry Potter Hermione Ron", 10);
-    var result = lorem.createSentence();
+    var result = lorem.createSingleSentence();
     expect(typeof result).toEqual("string");
   });
 

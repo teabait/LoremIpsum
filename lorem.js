@@ -48,7 +48,7 @@ LoremIpsumGen.prototype.fillBucket = function() {
 // creates sentence made of words from this.wordBucket
 // each sentence is 4-12 words long
 // returns sentence as a string
-LoremIpsumGen.prototype.createSentence = function () {
+LoremIpsumGen.prototype.createSingleSentence = function () {
   var sentenceWords = [];
   // varied sentence length
   var numWords = Math.floor(Math.random() * 8) + 4;
@@ -68,7 +68,7 @@ LoremIpsumGen.prototype.createSentences = function () {
     this.createSentence();
   }
 
-  return sentences.hej('tea');
+  return sentences;
 };
 
 // make sentence presentable:
