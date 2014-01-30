@@ -41,7 +41,7 @@ var Paragraph = function(sentences) {
   this.sentences = sentences;
 }
 
-// turns array of sentences into a cohesive paragraph
+// turns array of sentences into a cohesive paragraph and adds two line breaks between paragraphs
 Paragraph.prototype.toString = function () {
   return this.sentences.join(" ") + "\n\n";
 }
@@ -53,15 +53,16 @@ Paragraph.prototype.toString = function () {
 //  \__,_| .__/| .__/   |_|  \__,_|_| |_|\___|\__|_|\___/|_| |_|___/
 //       |_|   |_|
 
-// creates a blob of n words, n being the number of words user asks for
+// creates a blob of i words, i being the number of words user asks for
 LoremIpsumGen.prototype.fillBucket = function() {
   for(var i = 0; i < this.num; i++) {
+    // words put in by random order from user's original input.
     this.wordBucket.push(this.listOfWords[Math.floor(Math.random()*this.listOfWords.length)].toLowerCase());
   }
   return this.wordBucket;
 }
 
-// creates sentence made of words from this.wordBucket
+// creates one sentence made of words from this.wordBucket
 // each sentence is 4-12 words long
 // returns sentence as a string
 LoremIpsumGen.prototype.createSingleSentence = function () {
@@ -82,6 +83,7 @@ LoremIpsumGen.prototype.createSingleSentence = function () {
   return sentence.toString();
 }
 
+// keeps creating sentences until all words are taken out of the wordbucket
 LoremIpsumGen.prototype.createAllSentences = function () {
   while (this.wordBucket.length > 0) {
     sentence = this.createSingleSentence();
@@ -91,6 +93,8 @@ LoremIpsumGen.prototype.createAllSentences = function () {
   return this.sentenceBucket;
 };
 
+// creates a single paragraph between 3-9 sentences.
+// returns paragraph in string form
 LoremIpsumGen.prototype.createSingleParagraph = function () {
   var paragraphSentences = [];
   var numSentences = Math.floor(Math.random() *6) + 3;
@@ -105,6 +109,8 @@ LoremIpsumGen.prototype.createSingleParagraph = function () {
   return paragraph.toString();
 }
 
+// until all the sentences have been used up, it keeps creating more sentences
+// then joins them together as one long string
 LoremIpsumGen.prototype.createAllParagraphs = function () {
   var paragraphs = [];
   this.createAllSentences();
