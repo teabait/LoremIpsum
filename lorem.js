@@ -52,22 +52,31 @@ LoremIpsumGen.prototype.createSingleSentence = function () {
   var sentenceWords = [];
   // varied sentence length
   var numWords = Math.floor(Math.random() * 8) + 4;
-  for(var i = 0; i <= numWords; i++) {
+  //if wordBucket.length > numWords, run it numWords times
+  //  else run it wordBucket.length times
+  if(this.wordBucket.length < numWords) {
+    numWords = this.wordBucket.length;
+  }
+  for(var i = 0; i < numWords; i++) {
     // get random word from input wordBucket
     var firstWord = this.wordBucket.shift();
     sentenceWords.push(firstWord);
   }
+  console.log(sentenceWords);
   var sentence = new Sentence(sentenceWords);
+  sentence.words[0] = sentence.words[0].charAt(0).toUpperCase() + sentence.words[0].slice(1);
+  // console.log(sentence.toString());
   return sentence.toString();
 }
 
-LoremIpsumGen.prototype.createSentences = function () {
+LoremIpsumGen.prototype.createAllSentences = function () {
   var sentences = [];
 
   while (this.wordBucket.length > 0) {
-    this.createSentence();
+    sentence = this.createSingleSentence();
+    sentences.push(sentence);
   }
-
+  // console.log(sentences.join(" "));
   return sentences;
 };
 
